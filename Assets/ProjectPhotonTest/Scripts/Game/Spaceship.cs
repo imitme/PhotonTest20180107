@@ -8,6 +8,9 @@ public class Spaceship : MonoBehaviourPun
     public float RotationSpeed = 90.0f;
     public float MovementSpeed = 2.0f;
     public float MaxSpeed = 0.2f;
+
+    public GameObject BulletPrefab;
+
     private new Rigidbody rigidbody;
     private float rotation = 0.0f;
     private float acceleration = 0.0f;
@@ -26,6 +29,16 @@ public class Spaceship : MonoBehaviourPun
         }
         rotation = Input.GetAxis("Horizontal");
         acceleration = Input.GetAxis("Vertical");
+
+        if (Input.GetButton("Jump") && shootingTimer <= 0.0)
+        {
+            shootingTimer = 0.2f;
+            photonView.RPC("Fire", RpcTarget.AllViaServer, rigidbody.position, rigidbody.rotation);
+        }
+        if (shootingTimer > 0.0f)
+        {
+            shootingTimer -= Time.deltaTime;
+        }
     }
 
     public void FixedUpdate()
@@ -69,5 +82,16 @@ public class Spaceship : MonoBehaviourPun
             // offset a little bit to avoid looping back & forth between the 2 edges
             rigidbody.position -= rigidbody.position.normalized * 0.1f;
         }
+    }
+
+    [PunRPC]
+    public void Fire(Vector3 position, Quaternion rotation, PhotonMessageInfo info)
+    {
+        float lag = (float)(PhotonNetwork.Time - info.timestamp);
+        GameObject bullet;
+        /** Use this if you want to fire one bullet at a time **/
+        bullet = Instantiate(BulletPrefab, rigidbody.position, Quaternion.identity) as GameObject;
+        bullet.GetComponent<Bullet>().InitializeBullet(photonView.Owner,
+        (rotation * Vector3.forward), Mathf.Abs(lag));
     }
 }

@@ -4718,6 +4718,7 @@ GameObject:
   - component: {fileID: 11417374}
   - component: {fileID: 2053036070872143962}
   - component: {fileID: 13675448}
+  - component: {fileID: 8181117477347723414}
   m_Layer: 8
   m_Name: MySpaceship
   m_TagString: Player
@@ -4822,7 +4823,7 @@ MonoBehaviour:
   OwnershipTransfer: 0
   ObservedComponents:
   - {fileID: 11417374}
-  viewIdField: 1
+  viewIdField: 0
   InstantiationId: 1
   isRuntimeInstantiated: 0
 --- !u!114 &11417374
@@ -4867,6 +4868,22 @@ CapsuleCollider:
   m_Height: 6.570561
   m_Direction: 2
   m_Center: {x: 0, y: 0.5, z: -0.2}
+--- !u!114 &8181117477347723414
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 178952}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e89e086244297ac49b91e49bf665c114, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  RotationSpeed: 90
+  MovementSpeed: 2
+  MaxSpeed: 0.2
+  BulletPrefab: {fileID: 152888, guid: c30810321cf3d424eaa7a5c800cec143, type: 3}
 --- !u!1 &185348
 GameObject:
   m_ObjectHideFlags: 0
